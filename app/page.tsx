@@ -1,12 +1,11 @@
-import { Carousel } from 'components/carousel';
-import { ThreeItemGrid } from 'components/grid/three-items';
+import { HomeGrid } from 'components/HomeGrid';
 import Footer from 'components/layout/footer';
 import { Suspense } from 'react';
 
 export const runtime = 'edge';
 
 export const metadata = {
-  description: 'High-performance ecommerce store built with Next.js, Vercel, and Shopify.',
+  description: 'La pilcha mas pituca de la via lactea',
   openGraph: {
     type: 'website'
   }
@@ -14,14 +13,11 @@ export const metadata = {
 
 export default async function HomePage() {
   return (
-    <>
-      <ThreeItemGrid />
+    <Suspense>
+      <HomeGrid />
       <Suspense>
-        <Carousel />
-        <Suspense>
-          <Footer />
-        </Suspense>
+        <Footer />
       </Suspense>
-    </>
+    </Suspense>
   );
 }

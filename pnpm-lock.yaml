@@ -17,6 +17,9 @@ dependencies:
   geist:
     specifier: ^1.0.0
     version: 1.0.0
+  google:
+    specifier: link:next/font/google
+    version: link:next/font/google
   next:
     specifier: 14.0.0
     version: 14.0.0(react-dom@18.2.0)(react@18.2.0)
