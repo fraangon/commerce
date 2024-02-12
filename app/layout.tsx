@@ -22,10 +22,12 @@ export const metadata = {
   }
 };
 
-export default async function RootLayout({ children }: { children: ReactNode }) {
-  const IBMPlexSans = IBM_Plex_Sans({
-    weight: ['100', '200', '300', '400', '500', '600', '700']
-  });
+const IBMPlexSans = IBM_Plex_Sans({
+  weight: ['100', '200', '300', '400', '500', '600', '700'],
+  subsets: ['latin']
+});
+
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={IBMPlexSans.className}>
       <body className="bg-neutral-50 text-black selection:bg-sky-300 ">
