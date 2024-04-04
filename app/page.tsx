@@ -1,5 +1,4 @@
 import { HomeGrid } from 'components/HomeGrid';
-import Footer from 'components/layout/footer';
 import { Suspense } from 'react';
 
 export const runtime = 'edge';
@@ -15,9 +14,9 @@ export default async function HomePage() {
   return (
     <Suspense>
       <HomeGrid />
-      <Suspense>
+      {/* <Suspense>
         <Footer />
-      </Suspense>
+      </Suspense> */}
     </Suspense>
   );
 }
