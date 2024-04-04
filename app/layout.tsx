@@ -30,12 +30,10 @@ const IBMPlexSans = IBM_Plex_Sans({
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={IBMPlexSans.className}>
-      <body className="flex flex-col justify-center bg-brand-100 text-brand-900">
+      <body className="bg-neutral-50 text-black selection:bg-sky-300 ">
         <Navbar />
         <Suspense>
-          <main className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center">
-            {children}
-          </main>
+          <main>{children}</main>
         </Suspense>
       </body>
     </html>
