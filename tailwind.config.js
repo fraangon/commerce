@@ -7,9 +7,8 @@ module.exports = {
     extend: {
       colors: {
         brand: {
-          100: '#F9F9F8',
-          200: '#F0F0EF',
-          900: '#21201C'
+          100: '#FBF7F3',
+          900: '#181A17'
         }
       },
       fontFamily: {
