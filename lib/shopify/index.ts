@@ -59,7 +59,7 @@ const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!;
 type ExtractVariables<T> = T extends { variables: object } ? T['variables'] : never;
 
 export async function shopifyFetch<T>({
-  cache = 'force-cache',
+  cache,
   headers,
   query,
   tags,
@@ -72,8 +72,6 @@ export async function shopifyFetch<T>({
   variables?: ExtractVariables<T>;
 }): Promise<{ status: number; body: T } | never> {
   try {
-    console.log(`Endpoint: ${endpoint}`);
-    console.log(`Fetching from Shopify: ${query}, `);
     const result = await fetch(endpoint, {
       method: 'POST',
       headers: {
@@ -90,8 +88,6 @@ export async function shopifyFetch<T>({
     });
 
     const body = await result.json();
-
-    console.log(`Response from Shopify: ${JSON.stringify(body)}`);
 
     if (body.errors) {
       throw body.errors[0];
@@ -306,7 +302,6 @@ export async function getCollectionProducts({
   });
 
   if (!res.body.data.collection) {
-    console.log(`No collection found for \`${collection}\``);
     return [];
   }
 
@@ -408,7 +403,6 @@ export async function getProducts({
   reverse?: boolean;
   sortKey?: string;
 }): Promise<Product[]> {
-  console.log('getProducts');
   const res = await shopifyFetch<ShopifyProductsOperation>({
     query: getProductsQuery,
     tags: [TAGS.products],

@@ -6,3 +6,10 @@ export function getProductsForRow(products: any[], productsForRow: number) {
     return acc;
   }, []);
 }
+
+export function isProductAvailable(product: {
+  id: string;
+  variants: { id: string; availableForSale: boolean }[];
+}): boolean {
+  return product.variants.some((variant) => variant.availableForSale);
+}

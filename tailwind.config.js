@@ -34,6 +34,9 @@ module.exports = {
         fadeIn: 'fadeIn .3s ease-in-out',
         carousel: 'marquee 60s linear infinite',
         blink: 'blink 1.4s both infinite'
+      },
+      borderRadius: {
+        image: '4px'
       }
     }
   },

@@ -1,24 +1,24 @@
-import clsx from 'clsx';
+// eslint-disable-next-line no-unused-vars
+const pasrseCurrencyWithLocalConfig = (amount: string, currencyCode: string) => {
+  return new Intl.NumberFormat(undefined, {
+    style: 'currency',
+    currency: currencyCode,
+    currencyDisplay: 'narrowSymbol'
+  }).format(parseFloat(amount));
+};
+
+const pasrseCurrency = (amount: string) => {
+  return `$${amount.split('.')[0]}`;
+};
 
 const Price = ({
   amount,
-  className,
-  currencyCode = 'USD',
-  currencyCodeClassName
+  currencyCode = 'USD'
 }: {
   amount: string;
-  className?: string;
   currencyCode: string;
-  currencyCodeClassName?: string;
 } & React.ComponentProps<'p'>) => (
-  <p suppressHydrationWarning={true} className={className}>
-    {`${new Intl.NumberFormat(undefined, {
-      style: 'currency',
-      currency: currencyCode,
-      currencyDisplay: 'narrowSymbol'
-    }).format(parseFloat(amount))}`}
-    <span className={clsx('ml-1 inline', currencyCodeClassName)}>{`${currencyCode}`}</span>
-  </p>
+  <span suppressHydrationWarning={true}>{`${pasrseCurrency(amount)} ${currencyCode}`}</span>
 );
 
 export default Price;
