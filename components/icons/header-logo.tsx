@@ -6,7 +6,7 @@ export default function HeaderLogo() {
       style={{
         position: 'relative',
         width: '100%',
-        paddingBottom: `${100 / aspectRatio}%` // Mantiene la relación de aspecto
+        paddingBottom: `${100 / aspectRatio}%`
       }}
     >
       <svg
