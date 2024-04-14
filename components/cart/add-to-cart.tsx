@@ -1,36 +1,10 @@
 'use client';
 
-import clsx from 'clsx';
+import Button from 'components/Button';
 import { addItem } from 'components/cart/actions';
 import { ProductVariant } from 'lib/shopify/types';
 import { useSearchParams } from 'next/navigation';
 import { useFormState, useFormStatus } from 'react-dom';
-
-function Button({
-  classname,
-  children,
-  disabled,
-  ...props
-}: {
-  classname?: string;
-  disabled: boolean;
-  children: React.ReactNode;
-  onClick?: any;
-}) {
-  return (
-    <button
-      className={clsx(
-        'flex w-full items-center justify-center rounded bg-brand-900 px-4 py-3 text-[16px] font-semibold tracking-normal text-brand-100 transition-all',
-        disabled ? 'cursor-not-allowed opacity-60 hover:opacity-60' : 'hover:bg-brand-900/90',
-        classname
-      )}
-      disabled={disabled}
-      {...props}
-    >
-      {children}
-    </button>
-  );
-}
 
 function SubmitButton({
   availableForSale,
