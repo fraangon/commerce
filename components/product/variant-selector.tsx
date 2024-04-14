@@ -2,7 +2,7 @@
 
 import clsx from 'clsx';
 import { ProductOption, ProductVariant } from 'lib/shopify/types';
-import { createUrl } from 'lib/utils';
+import { createUrl } from 'lib/utils/general';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 
 type Combination = {
@@ -10,6 +10,76 @@ type Combination = {
   availableForSale: boolean;
   [key: string]: string | boolean; // ie. { color: 'Red', size: 'Large', ... }
 };
+
+function VariantButton({
+  value,
+  option,
+  searchParams,
+  options,
+  pathname,
+  combinations,
+  router
+}: {
+  value: string;
+  option: ProductOption;
+  searchParams: URLSearchParams;
+  options: ProductOption[];
+  pathname: string;
+  combinations: Combination[];
+  router: any;
+}) {
+  const optionNameLowerCase = option.name.toLowerCase();
+
+  // Base option params on current params so we can preserve any other param state in the url.
+  const optionSearchParams = new URLSearchParams(searchParams.toString());
+
+  // Update the option params using the current option to reflect how the url *would* change,
+  // if the option was clicked.
+  optionSearchParams.set(optionNameLowerCase, value);
+  const optionUrl = createUrl(pathname, optionSearchParams);
+
+  // In order to determine if an option is available for sale, we need to:
+  //
+  // 1. Filter out all other param state
+  // 2. Filter out invalid options
+  // 3. Check if the option combination is available for sale
+  //
+  // This is the "magic" that will cross check possible variant combinations and preemptively
+  // disable combinations that are not available. For example, if the color gray is only available in size medium,
+  // then all other sizes should be disabled.
+  const filtered = Array.from(optionSearchParams.entries()).filter(([key, value]) =>
+    options.find((option) => option.name.toLowerCase() === key && option.values.includes(value))
+  );
+  const isAvailableForSale = combinations.find((combination) =>
+    filtered.every(([key, value]) => combination[key] === value && combination.availableForSale)
+  );
+
+  // The option is active if it's in the url params.
+  const isActive = searchParams.get(optionNameLowerCase) === value;
+
+  return (
+    <button
+      key={value}
+      aria-disabled={!isAvailableForSale}
+      disabled={!isAvailableForSale}
+      onClick={() => {
+        router.replace(optionUrl, { scroll: false });
+      }}
+      title={`${option.name} ${value}${!isAvailableForSale ? ' (Out of Stock)' : ''}`}
+      className={clsx(
+        'flex h-7 w-7 min-w-[28px] items-center justify-center rounded border text-[16px] leading-none tracking-tight transition-all',
+        {
+          'cursor-default border-transparent bg-brand-900 text-brand-100': isActive,
+          'bg-transparent text-brand-900 hover:scale-110': !isActive && isAvailableForSale,
+          'pointer-events-none  cursor-not-allowed text-brand-900/60 opacity-50':
+            !isAvailableForSale
+        }
+      )}
+    >
+      {value}
+    </button>
+  );
+}
 
 export function VariantSelector({
   options,
@@ -39,67 +109,21 @@ export function VariantSelector({
   }));
 
   return options.map((option) => (
-    <dl className="mb-8" key={option.id}>
-      <dt className="mb-4 text-sm uppercase tracking-wide">{option.name}</dt>
-      <dd className="flex flex-wrap gap-3">
-        {option.values.map((value) => {
-          const optionNameLowerCase = option.name.toLowerCase();
-
-          // Base option params on current params so we can preserve any other param state in the url.
-          const optionSearchParams = new URLSearchParams(searchParams.toString());
-
-          // Update the option params using the current option to reflect how the url *would* change,
-          // if the option was clicked.
-          optionSearchParams.set(optionNameLowerCase, value);
-          const optionUrl = createUrl(pathname, optionSearchParams);
-
-          // In order to determine if an option is available for sale, we need to:
-          //
-          // 1. Filter out all other param state
-          // 2. Filter out invalid options
-          // 3. Check if the option combination is available for sale
-          //
-          // This is the "magic" that will cross check possible variant combinations and preemptively
-          // disable combinations that are not available. For example, if the color gray is only available in size medium,
-          // then all other sizes should be disabled.
-          const filtered = Array.from(optionSearchParams.entries()).filter(([key, value]) =>
-            options.find(
-              (option) => option.name.toLowerCase() === key && option.values.includes(value)
-            )
-          );
-          const isAvailableForSale = combinations.find((combination) =>
-            filtered.every(
-              ([key, value]) => combination[key] === value && combination.availableForSale
-            )
-          );
-
-          // The option is active if it's in the url params.
-          const isActive = searchParams.get(optionNameLowerCase) === value;
-
-          return (
-            <button
-              key={value}
-              aria-disabled={!isAvailableForSale}
-              disabled={!isAvailableForSale}
-              onClick={() => {
-                router.replace(optionUrl, { scroll: false });
-              }}
-              title={`${option.name} ${value}${!isAvailableForSale ? ' (Out of Stock)' : ''}`}
-              className={clsx(
-                'flex min-w-[48px] items-center justify-center rounded-full border bg-brand-900 px-2 py-1 text-sm dark:border-neutral-800 dark:bg-brand-100',
-                {
-                  'cursor-default ring-2 ring-blue-600': isActive,
-                  'ring-1 ring-transparent transition duration-300 ease-in-out hover:scale-110 hover:ring-blue-600 ':
-                    !isActive && isAvailableForSale,
-                  'relative z-10 cursor-not-allowed overflow-hidden bg-brand-900 text-neutral-500 ring-1 ring-neutral-300 before:absolute before:inset-x-0 before:-z-10 before:h-px before:-rotate-45 before:bg-neutral-300 before:transition-transform dark:bg-brand-100 dark:text-neutral-400 dark:ring-neutral-700 before:dark:bg-neutral-700':
-                    !isAvailableForSale
-                }
-              )}
-            >
-              {value}
-            </button>
-          );
-        })}
+    <dl className="flex flex-col justify-start space-y-2" key={option.id}>
+      <dt className="text-[14px] font-normal leading-none tracking-tight">{option.name}</dt>
+      <dd className="flex flex-row space-x-1">
+        {option.values.map((value) => (
+          <VariantButton
+            key={value}
+            value={value}
+            option={option}
+            searchParams={searchParams}
+            options={options}
+            pathname={pathname}
+            combinations={combinations}
+            router={router}
+          />
+        ))}
       </dd>
     </dl>
   ));

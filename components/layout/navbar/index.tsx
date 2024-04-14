@@ -34,7 +34,7 @@ export default async function Navbar() {
   return (
     // gradient from top to bottom
     <div className="sticky left-0 top-0 z-10 flex flex-row items-center justify-center bg-gradient-to-b from-brand-100 to-transparent pb-2">
-      <nav className="items-bottom flex w-full max-w-[1080px] justify-start gap-4 p-4">
+      <nav className="items-bottom flex w-full max-w-default justify-start gap-4 p-4">
         <div className="flex w-full flex-row items-end justify-start gap-4">
           <Link href="/" className="transition-opacity duration-75 hover:opacity-60">
             <Logo className="h-8 w-fit fill-brand-900" />

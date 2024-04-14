@@ -37,6 +37,9 @@ module.exports = {
       },
       borderRadius: {
         image: '4px'
+      },
+      maxWidth: {
+        default: '1080px'
       }
     }
   },

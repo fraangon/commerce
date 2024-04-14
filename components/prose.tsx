@@ -7,6 +7,7 @@ interface TextProps {
 }
 
 const Prose: FunctionComponent<TextProps> = ({ html, className }) => {
+  console.log(html);
   return (
     <div
       className={clsx(

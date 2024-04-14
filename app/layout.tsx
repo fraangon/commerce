@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={IBMPlexSans.className}>
       <body className="flex flex-col justify-center bg-brand-100 text-brand-900">
-        <div className="mx-auto flex w-full max-w-[1080px] flex-col justify-start">
+        <div className="mx-auto flex w-full max-w-default flex-col justify-start">
           <Navbar />
           <Suspense>
             <main className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center">
