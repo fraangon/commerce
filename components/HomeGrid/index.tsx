@@ -9,7 +9,7 @@ export async function HomeGrid() {
   if (!products?.length) return null;
 
   return (
-    <div className="w-full overflow-x-auto px-4 pb-6 pt-1">
+    <div className="w-full overflow-x-auto px-4 pb-20 pt-20">
       <ul className="flex w-full flex-row flex-wrap gap-4">
         {getProductsForRow(products, 2).map((row: any, indexRow: number) => (
           <li key={indexRow} className="flex w-full flex-row gap-4">

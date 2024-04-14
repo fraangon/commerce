@@ -4,10 +4,10 @@ import { Suspense } from 'react';
 
 import Footer from 'components/layout/footer';
 import { ProductDescription } from 'components/product/product-description';
+import ProductImages from 'components/product/product-images';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
 import { getProduct } from 'lib/shopify';
 import { getProductJsonLd } from 'lib/utils/product';
-import Image from 'next/image';
 
 export const runtime = 'edge';
 
@@ -54,8 +54,6 @@ export default async function ProductPage({ params }: { params: { handle: string
 
   if (!product) return notFound();
 
-  const mainImage: any = product.images[0];
-
   return (
     <>
       <script
@@ -64,16 +62,8 @@ export default async function ProductPage({ params }: { params: { handle: string
           __html: JSON.stringify(getProductJsonLd(product))
         }}
       />
-      <div className="flex w-full max-w-default flex-row space-x-4 px-4">
-        <div className="flex aspect-square h-full w-full cursor-pointer justify-center rounded bg-brand-200">
-          <Image
-            src={mainImage.url}
-            alt={mainImage.altText}
-            width={mainImage.width}
-            height={mainImage.height}
-            className="aspect-square h-full w-full object-cover"
-          />
-        </div>
+      <div className="flex w-full max-w-default flex-row space-x-4 px-4 pb-20">
+        <ProductImages images={product.images} />
         <ProductDescription product={product} />
       </div>
       <Suspense>

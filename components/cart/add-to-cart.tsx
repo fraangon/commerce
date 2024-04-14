@@ -44,7 +44,7 @@ function SubmitButton({
   if (!availableForSale) {
     return (
       <Button disabled aria-disabled>
-        Out Of Stock
+        Sin Stock
       </Button>
     );
   }
@@ -52,7 +52,7 @@ function SubmitButton({
   if (!selectedVariantId) {
     return (
       <Button aria-label="Please select an option" aria-disabled disabled>
-        Add To Cart
+        Agregar al carrito
       </Button>
     );
   }
@@ -64,7 +64,7 @@ function SubmitButton({
         if (pending) e.preventDefault();
       }}
     >
-      Add To Cart
+      {pending ? 'Agregando...' : 'Agregar al carrito'}
     </Button>
   );
 }

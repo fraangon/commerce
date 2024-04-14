@@ -1,66 +1,59 @@
+import { ITEMS, SOCIALS } from 'lib/constants/navegation';
 import Link from 'next/link';
-
-import FooterMenu from 'components/layout/footer-menu';
-
-import { getMenu } from 'lib/shopify';
-import { Suspense } from 'react';
 
 const { COMPANY_NAME, SITE_NAME } = process.env;
 
 export default async function Footer() {
   const currentYear = new Date().getFullYear();
   const copyrightDate = 2023 + (currentYear > 2023 ? `-${currentYear}` : '');
-  const skeleton = 'w-full h-6 animate-pulse rounded bg-neutral-200 dark:bg-neutral-700';
-  const menu = await getMenu('next-js-frontend-footer-menu');
-  const copyrightName = COMPANY_NAME || SITE_NAME || '';
+  const copyrightName = COMPANY_NAME || SITE_NAME || 'Keyframe';
+
+  const sections = [
+    {
+      label: 'Sitio',
+      items: ITEMS
+    },
+    {
+      label: 'Redes',
+      items: SOCIALS
+    }
+  ];
 
   return (
-    <footer className="text-sm text-neutral-500 dark:text-neutral-400">
-      <div className="mx-auto flex w-full max-w-7xl flex-col gap-6 border-t border-neutral-200 px-6 py-12 text-sm dark:border-neutral-700 md:flex-row md:gap-12 md:px-4 min-[1320px]:px-0">
-        <div>
-          <Link className="flex items-center gap-2 text-black dark:text-white md:pt-1" href="/">
-            <span className="uppercase">{SITE_NAME}</span>
-          </Link>
-        </div>
-        <Suspense
-          fallback={
-            <div className="flex h-[188px] w-[200px] flex-col gap-2">
-              <div className={skeleton} />
-              <div className={skeleton} />
-              <div className={skeleton} />
-              <div className={skeleton} />
-              <div className={skeleton} />
-              <div className={skeleton} />
+    <footer className="flex w-full flex-row px-4  text-[14px] leading-none text-brand-900">
+      <div className="flex w-full flex-row gap-4 border-t border-brand-900/5 py-10">
+        <div className="flex w-full flex-row space-y-2">
+          {sections.map(({ label, items }) => (
+            <div key={label} className="flex w-full flex-col space-y-2">
+              <span className="font-semibold">{label}</span>
+              {items
+                .filter(({ href }) => href)
+                .map(({ href, label }) => (
+                  <Link
+                    key={href}
+                    href={href as string}
+                    {...(href?.startsWith('http')
+                      ? { target: '_blank', rel: 'noopener noreferrer' }
+                      : {})}
+                    className="text-brand-900/80 transition-all hover:opacity-60"
+                  >
+                    {label}
+                  </Link>
+                ))}
             </div>
-          }
-        >
-          <FooterMenu menu={menu} />
-        </Suspense>
-        <div className="md:ml-auto">
-          <a
-            className="flex h-8 w-max flex-none items-center justify-center rounded-md border border-neutral-200 bg-white text-xs text-black dark:border-neutral-700 dark:bg-black dark:text-white"
-            aria-label="Deploy on Vercel"
-            href="https://vercel.com/templates/next.js/nextjs-commerce"
-          >
-            <span className="px-3">▲</span>
-            <hr className="h-full border-r border-neutral-200 dark:border-neutral-700" />
-            <span className="px-3">Deploy</span>
-          </a>
+          ))}
         </div>
-      </div>
-      <div className="border-t border-neutral-200 py-6 text-sm dark:border-neutral-700">
-        <div className="mx-auto flex w-full max-w-7xl flex-col items-center gap-1 px-4 md:flex-row md:gap-0 md:px-4 min-[1320px]:px-0">
-          <p>
-            &copy; {copyrightDate} {copyrightName}
-            {copyrightName.length && !copyrightName.endsWith('.') ? '.' : ''} All rights reserved.
-          </p>
-          <hr className="mx-4 hidden h-4 w-[1px] border-l border-neutral-400 md:inline-block" />
-          <p>Designed in California</p>
-          <p className="md:ml-auto">
-            <a href="https://vercel.com" className="text-black dark:text-white">
-              Crafted by ▲ Vercel
-            </a>
-          </p>
+
+        <div className="flex w-full flex-row space-x-2">
+          <div className="flex w-full flex-col space-y-2">
+            <span>Hecho en Buenos Aires.</span>
+          </div>
+
+          <div className="flex w-full flex-col space-y-2">
+            <span className="text-right">
+              &copy; {copyrightDate} {copyrightName}.
+            </span>
+          </div>
         </div>
       </div>
     </footer>

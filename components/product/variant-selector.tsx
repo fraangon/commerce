@@ -65,14 +65,14 @@ function VariantButton({
       onClick={() => {
         router.replace(optionUrl, { scroll: false });
       }}
-      title={`${option.name} ${value}${!isAvailableForSale ? ' (Out of Stock)' : ''}`}
+      title={`${option.name} ${value}${!isAvailableForSale ? ' (Sin Stock)' : ''}`}
       className={clsx(
         'flex h-7 w-7 min-w-[28px] items-center justify-center rounded border text-[16px] leading-none tracking-tight transition-all',
         {
           'cursor-default border-transparent bg-brand-900 text-brand-100': isActive,
-          'bg-transparent text-brand-900 hover:scale-110': !isActive && isAvailableForSale,
-          'pointer-events-none  cursor-not-allowed text-brand-900/60 opacity-50':
-            !isAvailableForSale
+          'border-brand-900/30 bg-transparent text-brand-900 hover:scale-110':
+            !isActive && isAvailableForSale,
+          'cursor-not-allowed text-brand-900/60 opacity-50': !isAvailableForSale
         }
       )}
     >
