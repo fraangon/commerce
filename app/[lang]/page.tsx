@@ -11,7 +11,8 @@ export const metadata = {
   }
 };
 
-export default async function HomePage() {
+export default async function HomePage({ params: { lang } }: { params: { lang: string } }) {
+  console.log('Home page', lang);
   return (
     <Suspense>
       <HomeGrid />

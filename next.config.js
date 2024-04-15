@@ -22,5 +22,9 @@ module.exports = {
         permanent: true
       }
     ];
+  },
+  i18n: {
+    locales: ['ar', 'intl'],
+    defaultLocale: 'ar'
   }
 };

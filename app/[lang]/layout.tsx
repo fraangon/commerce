@@ -22,12 +22,17 @@ export const metadata = {
   }
 };
 
+export async function generateStaticParams() {
+  return [{ lang: 'ar' }, { lang: 'intl' }];
+}
+
 const IBMPlexSans = IBM_Plex_Sans({
   weight: ['100', '200', '300', '400', '500', '600', '700'],
   subsets: ['latin']
 });
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({ children, ...params }: { children: ReactNode }) {
+  console.log('Root layout', params);
   return (
     <html lang="en" className={IBMPlexSans.className}>
       <body className="flex flex-col justify-center bg-brand-100 text-brand-900">
