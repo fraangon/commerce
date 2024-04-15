@@ -1,10 +1,11 @@
 import { GridTileImage } from 'components/grid/tile';
+import { Location } from 'lib/constants/locations';
 import { getProducts } from 'lib/shopify';
 import Link from 'next/link';
 import { getProductsForRow, isProductAvailable } from './utils';
 
-export async function HomeGrid() {
-  const products = await getProducts({ sortKey: 'CREATED_AT', reverse: true });
+export async function HomeGrid({ lang }: { lang: Location }) {
+  const products = await getProducts({ sortKey: 'CREATED_AT', reverse: true, location: lang });
 
   if (!products?.length) return null;
 

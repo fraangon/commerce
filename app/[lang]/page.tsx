@@ -1,4 +1,4 @@
-import { HomeGrid } from 'components/HomeGrid';
+import { HomeGrid } from 'components/home-grid';
 import Footer from 'components/layout/footer';
 import { Suspense } from 'react';
 
@@ -11,10 +11,10 @@ export const metadata = {
   }
 };
 
-export default async function HomePage() {
+export default async function HomePage({ params: { lang } }) {
   return (
     <Suspense>
-      <HomeGrid />
+      <HomeGrid lang={lang} />
       <Suspense>
         <Footer />
       </Suspense>

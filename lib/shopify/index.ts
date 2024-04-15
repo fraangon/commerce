@@ -1,6 +1,7 @@
-import { HIDDEN_PRODUCT_TAG, SHOPIFY_GRAPHQL_API_ENDPOINT, TAGS } from 'lib/constants';
+import { HIDDEN_PRODUCT_TAG, TAGS } from 'lib/constants';
+import { endpointConfig } from 'lib/constants/api';
+import { Location, locations } from 'lib/constants/locations';
 import { isShopifyError } from 'lib/type-guards';
-import { ensureStartsWith } from 'lib/utils/general';
 import { revalidateTag } from 'next/cache';
 import { headers } from 'next/headers';
 import { NextRequest, NextResponse } from 'next/server';
@@ -50,11 +51,11 @@ import {
   ShopifyUpdateCartOperation
 } from './types';
 
-const domain = process.env.SHOPIFY_STORE_DOMAIN
-  ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, 'https://')
-  : '';
-const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
-const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!;
+// const domain = process.env.SHOPIFY_STORE_DOMAIN
+//   ? ensureStartsWith(process.env.SHOPIFY_STORE_DOMAIN, 'https://')
+//   : '';
+// const endpoint = `${domain}${SHOPIFY_GRAPHQL_API_ENDPOINT}`;
+// const key = process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN!;
 
 type ExtractVariables<T> = T extends { variables: object } ? T['variables'] : never;
 
@@ -64,20 +65,25 @@ export async function shopifyFetch<T>({
   headers,
   query,
   tags,
-  variables
+  variables,
+  location = locations.ar
 }: {
   cache?: RequestCache;
   headers?: HeadersInit;
   query: string;
   tags?: string[];
   variables?: ExtractVariables<T>;
+  location?: Location;
 }): Promise<{ status: number; body: T } | never> {
   try {
+    const { domain, endpoint, key } = endpointConfig[location];
+
     const result = await fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'X-Shopify-Storefront-Access-Token': key,
+        ...(location && { 'Internal-Location': location }),
         ...headers
       },
       body: JSON.stringify({
@@ -346,6 +352,9 @@ export async function getMenu(handle: string): Promise<Menu[]> {
     }
   });
 
+  // TODO: Check if here works with locations.ar hardcoded
+  const { domain } = endpointConfig[locations.ar as Location];
+
   return (
     res.body?.data?.menu?.items.map((item: { title: string; url: string }) => ({
       title: item.title,
@@ -398,11 +407,13 @@ export async function getProductRecommendations(productId: string): Promise<Prod
 export async function getProducts({
   query,
   reverse,
-  sortKey
+  sortKey,
+  location
 }: {
   query?: string;
   reverse?: boolean;
   sortKey?: string;
+  location?: Location;
 }): Promise<Product[]> {
   const res = await shopifyFetch<ShopifyProductsOperation>({
     query: getProductsQuery,
@@ -411,7 +422,8 @@ export async function getProducts({
       query,
       reverse,
       sortKey
-    }
+    },
+    location
   });
 
   return reshapeProducts(removeEdgesAndNodes(res.body.data.products));
