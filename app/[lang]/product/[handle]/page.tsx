@@ -6,6 +6,7 @@ import Footer from 'components/layout/footer';
 import { ProductDescription } from 'components/product/product-description';
 import ProductImages from 'components/product/product-images';
 import { HIDDEN_PRODUCT_TAG } from 'lib/constants';
+import { Location } from 'lib/constants/locations';
 import { getProduct } from 'lib/shopify';
 import { getProductJsonLd } from 'lib/utils/product';
 
@@ -49,8 +50,12 @@ export async function generateMetadata({
   };
 }
 
-export default async function ProductPage({ params }: { params: { handle: string } }) {
-  const product = await getProduct(params.handle);
+export default async function ProductPage({
+  params: { handle, lang }
+}: {
+  params: { handle: string; lang: Location };
+}) {
+  const product = await getProduct(handle);
 
   if (!product) return notFound();
 
@@ -67,7 +72,7 @@ export default async function ProductPage({ params }: { params: { handle: string
         <ProductDescription product={product} />
       </div>
       <Suspense>
-        <Footer />
+        <Footer lang={lang} />
       </Suspense>
     </>
   );

@@ -1,12 +1,11 @@
-'use client';
-
 import clsx from 'clsx';
+import LocationLink from 'components/location-link';
+import { Location } from 'lib/constants/locations';
 import { Menu } from 'lib/shopify/types';
-import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
-const FooterMenuItem = ({ item }: { item: Menu }) => {
+const FooterMenuItem = ({ item, lang }: { item: Menu; lang: Location }) => {
   const pathname = usePathname();
   const [active, setActive] = useState(pathname === item.path);
 
@@ -16,8 +15,9 @@ const FooterMenuItem = ({ item }: { item: Menu }) => {
 
   return (
     <li>
-      <Link
+      <LocationLink
         href={item.path}
+        lang={lang}
         className={clsx(
           'block p-2 text-lg underline-offset-4 hover:text-black hover:underline dark:hover:text-neutral-300 md:inline-block md:text-sm',
           {
@@ -26,19 +26,19 @@ const FooterMenuItem = ({ item }: { item: Menu }) => {
         )}
       >
         {item.title}
-      </Link>
+      </LocationLink>
     </li>
   );
 };
 
-export default function FooterMenu({ menu }: { menu: Menu[] }) {
+export default function FooterMenu({ menu, lang }: { menu: Menu[]; lang: Location }) {
   if (!menu.length) return null;
 
   return (
     <nav>
       <ul>
         {menu.map((item: Menu) => {
-          return <FooterMenuItem key={item.title} item={item} />;
+          return <FooterMenuItem key={item.title} item={item} lang={lang} />;
         })}
       </ul>
     </nav>

@@ -1,4 +1,5 @@
 import { getProducts } from 'lib/shopify';
+// TODO: Replace Link with a component that supports the `lang` prop.
 import Link from 'next/link';
 import { GridTileImage } from './grid/tile';
 

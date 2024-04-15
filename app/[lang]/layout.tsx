@@ -1,6 +1,7 @@
 import Navbar from 'components/layout/navbar';
 import { IBM_Plex_Sans } from 'next/font/google';
 
+import { Location } from 'lib/constants/locations';
 import { ReactNode, Suspense } from 'react';
 import '../globals.css';
 
@@ -32,12 +33,18 @@ export async function generateStaticParams() {
   return [{ lang: 'ar' }, { lang: 'g' }];
 }
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+  params: { lang }
+}: {
+  children: ReactNode;
+  params: { lang: Location };
+}) {
   return (
     <html lang="en" className={IBMPlexSans.className}>
       <body className="flex flex-col justify-center bg-brand-100 text-brand-900">
         <div className="mx-auto flex w-full max-w-default flex-col justify-start">
-          <Navbar />
+          <Navbar lang={lang} />
           <Suspense>
             <main className="mx-auto flex w-full max-w-7xl flex-col items-center justify-center">
               {children}

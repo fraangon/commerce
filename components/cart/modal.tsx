@@ -8,7 +8,9 @@ import Price from 'components/price';
 import { DEFAULT_OPTION } from 'lib/constants';
 import type { Cart } from 'lib/shopify/types';
 import { createUrl } from 'lib/utils/general';
-import Link from 'next/link';
+
+import LocationLink from 'components/location-link';
+import { Location } from 'lib/constants/locations';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import CloseCart from './close-cart';
 import { DeleteItemButton } from './delete-item-button';
@@ -19,7 +21,7 @@ type MerchandiseSearchParams = {
   [key: string]: string;
 };
 
-export default function CartModal({ cart }: { cart: Cart | undefined }) {
+export default function CartModal({ cart, lang }: { cart: Cart | undefined; lang: Location }) {
   const [isOpen, setIsOpen] = useState(false);
   const quantityRef = useRef(cart?.totalQuantity);
   const openCart = () => setIsOpen(true);
@@ -120,13 +122,14 @@ export default function CartModal({ cart }: { cart: Cart | undefined }) {
                               </div>
 
                               <div className="flex flex-col justify-start gap-1 py-1">
-                                <Link
+                                <LocationLink
                                   href={merchandiseUrl}
                                   onClick={closeCart}
                                   className="text-[16px] font-medium leading-none tracking-tight"
+                                  lang={lang}
                                 >
                                   {item.merchandise.product.title}
-                                </Link>
+                                </LocationLink>
                                 {item.merchandise.title !== DEFAULT_OPTION ? (
                                   <p className="text-[14px] text-brand-900/80">
                                     {item.merchandise.selectedOptions

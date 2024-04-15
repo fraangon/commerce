@@ -4,6 +4,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import { GridTileImage } from 'components/grid/tile';
 import { createUrl } from 'lib/utils/general';
 import Image from 'next/image';
+// TODO: Replace Link with a component that supports the `lang` prop.
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 

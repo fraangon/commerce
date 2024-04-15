@@ -3,6 +3,7 @@
 import clsx from 'clsx';
 import { SortFilterItem } from 'lib/constants';
 import { createUrl } from 'lib/utils/general';
+// TODO: Replace Link with a component that supports the `lang` prop.
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import type { ListItem, PathFilterItem } from '.';

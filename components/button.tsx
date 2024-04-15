@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import Link from 'next/link';
+import LocationLink from './location-link';
 
 export default function Button({
   classname,
@@ -13,7 +13,8 @@ export default function Button({
   href?: string;
   onClick?: any;
 }) {
-  const Component: any = props.href ? Link : 'button';
+  const Component: any = props.href ? LocationLink : 'button';
+
   return (
     <Component
       className={clsx(

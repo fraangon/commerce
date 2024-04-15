@@ -1,5 +1,6 @@
 import { HomeGrid } from 'components/home-grid';
 import Footer from 'components/layout/footer';
+import { Location } from 'lib/constants/locations';
 import { Suspense } from 'react';
 
 export const runtime = 'edge';
@@ -11,12 +12,12 @@ export const metadata = {
   }
 };
 
-export default async function HomePage({ params: { lang } }) {
+export default async function HomePage({ params: { lang } }: { params: { lang: Location } }) {
   return (
     <Suspense>
       <HomeGrid lang={lang} />
       <Suspense>
-        <Footer />
+        <Footer lang={lang} />
       </Suspense>
     </Suspense>
   );

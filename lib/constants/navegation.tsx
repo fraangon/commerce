@@ -1,6 +1,7 @@
 import Cart from 'components/cart';
 import OpenCart from 'components/cart/open-cart';
 import { Suspense } from 'react';
+import { Location } from './locations';
 
 export const ITEMS = [
   {
@@ -21,9 +22,9 @@ export const ITEMS = [
   {
     key: 'cart',
     label: 'Carrito',
-    component: () => (
+    component: ({ lang }: { lang: Location }) => (
       <Suspense fallback={<OpenCart />}>
-        <Cart />
+        <Cart lang={lang} />
       </Suspense>
     )
   }

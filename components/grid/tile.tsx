@@ -9,7 +9,7 @@ export function GridTileImage({
   alt,
   ...props
 }: {
-  isAvailable: boolean;
+  isAvailable?: boolean;
   label?: {
     title: string;
     amount: string;

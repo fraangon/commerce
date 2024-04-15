@@ -1,7 +1,7 @@
 import { GridTileImage } from 'components/grid/tile';
+import LocationLink from 'components/location-link';
 import { Location } from 'lib/constants/locations';
 import { getProducts } from 'lib/shopify';
-import Link from 'next/link';
 import { getProductsForRow, isProductAvailable } from './utils';
 
 export async function HomeGrid({ lang }: { lang: Location }) {
@@ -15,10 +15,11 @@ export async function HomeGrid({ lang }: { lang: Location }) {
         {getProductsForRow(products, 2).map((row: any, indexRow: number) => (
           <li key={indexRow} className="flex w-full flex-row gap-4">
             {row.map((product: any, indexProduct: number) => (
-              <Link
+              <LocationLink
                 key={`${product.handle}${indexProduct}`}
                 href={`/product/${product.handle}`}
                 className="h-fit w-full"
+                lang={lang}
               >
                 <GridTileImage
                   alt={product.title}
@@ -30,7 +31,7 @@ export async function HomeGrid({ lang }: { lang: Location }) {
                   isAvailable={isProductAvailable(product)}
                   src={product.featuredImage?.url}
                 />
-              </Link>
+              </LocationLink>
             ))}
           </li>
         ))}

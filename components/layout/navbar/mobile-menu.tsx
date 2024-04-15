@@ -1,6 +1,7 @@
 'use client';
 
 import { Dialog, Transition } from '@headlessui/react';
+// TODO: Replace Link with a component that supports the `lang` prop.
 import Link from 'next/link';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Fragment, useEffect, useState } from 'react';
