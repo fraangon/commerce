@@ -2,7 +2,7 @@ import Navbar from 'components/layout/navbar';
 import { IBM_Plex_Sans } from 'next/font/google';
 
 import { ReactNode, Suspense } from 'react';
-import './globals.css';
+import '../globals.css';
 
 const SITE_NAME = 'Keyframe';
 
@@ -26,6 +26,11 @@ const IBMPlexSans = IBM_Plex_Sans({
   weight: ['100', '200', '300', '400', '500', '600', '700'],
   subsets: ['latin']
 });
+
+// default render with language
+export async function generateStaticParams() {
+  return [{ lang: 'ar' }, { lang: 'g' }];
+}
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
