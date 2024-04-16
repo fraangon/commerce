@@ -357,7 +357,7 @@ export async function getMenu(handle: string): Promise<Menu[]> {
     }
   });
 
-  // TODO: Check if here works with locations.ar hardcoded
+  // TODO: Check if here works with locations.ar hardcoded or replace with `lang`.
   const { domain } = endpointConfig[locations.ar as Location];
 
   return (
