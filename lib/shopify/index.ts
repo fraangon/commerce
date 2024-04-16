@@ -223,7 +223,6 @@ export async function addToCart(
   lines: { merchandiseId: string; quantity: number }[],
   lang: Location = locations.ar as Location
 ): Promise<Cart> {
-  console.log('Step 5:addToCart', addToCartMutation, lines, lang, lang);
   const res = await shopifyFetch<ShopifyAddToCartOperation>({
     query: addToCartMutation,
     variables: {
@@ -233,7 +232,6 @@ export async function addToCart(
     cache: 'no-store',
     location: lang
   });
-  console.log('Step 6:addToCart', res.body.data.cartLinesAdd.cart);
 
   return reshapeCart(res.body.data.cartLinesAdd.cart);
 }

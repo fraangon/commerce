@@ -9,35 +9,25 @@ import { cookies } from 'next/headers';
 export async function addItem(prevState: any, selectedVariantId: string | undefined, lang: string) {
   let cartId = cookies().get(getCartId(lang))?.value;
   let cart;
-  console.log('Step 1:addItem', cartId);
 
   if (cartId) {
     cart = await getCart(cartId, lang as any);
   }
 
-  console.log('Step 2:addItem', cartId, cart);
-
   if (!cartId || !cart) {
-    console.log('Step 2.1:!cartId || !cart', cartId, cart);
     cart = await createCart(lang as any);
     cartId = cart.id;
     cookies().set(getCartId(lang), cartId);
   }
 
-  console.log('Step 3:addItem', cartId);
-
   if (!selectedVariantId) {
     return 'Missing product variant ID';
   }
 
-  console.log('Step 4:addItem', cartId, selectedVariantId);
-
   try {
-    console.log('Step 5:addItem', cartId, selectedVariantId, lang);
     await addToCart(cartId, [{ merchandiseId: selectedVariantId, quantity: 1 }], lang as any);
     revalidateTag(TAGS.cart);
   } catch (e) {
-    console.log('Step 6:addItem', cartId);
     return 'Error adding item to cart';
   }
 }

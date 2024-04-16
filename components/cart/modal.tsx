@@ -138,13 +138,21 @@ export default function CartModal({ cart, lang }: { cart: Cart | undefined; lang
                                   </p>
                                 ) : null}
                                 <div className="flex h-9 w-fit flex-row items-center rounded border border-brand-900/20">
-                                  <EditItemQuantityButton item={item} type="minus" />
+                                  <EditItemQuantityButton
+                                    item={item}
+                                    type="minus"
+                                    lang={lang as any}
+                                  />
                                   <p className="w-6 text-center">
                                     <span className="w-full text-sm font-semibold">
                                       {item.quantity}
                                     </span>
                                   </p>
-                                  <EditItemQuantityButton item={item} type="plus" />
+                                  <EditItemQuantityButton
+                                    item={item}
+                                    type="plus"
+                                    lang={lang as any}
+                                  />
                                 </div>
                               </div>
                             </div>
@@ -164,15 +172,19 @@ export default function CartModal({ cart, lang }: { cart: Cart | undefined; lang
                   </ul>
                   <div className="py-4 text-sm text-brand-900">
                     <div className="mb-3 flex items-center justify-between border-b border-brand-900/10 pb-1">
-                      <p className="font-medium">Taxes</p>
-                      <Price
-                        className="text-right text-base"
-                        amount={cart.cost.totalTaxAmount.amount}
-                        currencyCode={cart.cost.totalTaxAmount.currencyCode}
-                      />
+                      <p className="font-medium">Impuestos</p>
+                      {lang === 'ar' ? (
+                        '21% Iva incluido'
+                      ) : (
+                        <Price
+                          className="text-right text-base"
+                          amount={cart.cost.totalTaxAmount.amount}
+                          currencyCode={cart.cost.totalTaxAmount.currencyCode}
+                        />
+                      )}
                     </div>
                     <div className="mb-3 flex items-center justify-between border-b border-brand-900/10 pb-1 pt-1">
-                      <p className="font-medium">Shipping</p>
+                      <p className="font-medium">Envio</p>
                       <p className="text-right">Calculated at checkout</p>
                     </div>
                     <div className="mb-3 flex items-center justify-between border-b border-brand-900/10 pb-1 pt-1">
