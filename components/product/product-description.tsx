@@ -1,10 +1,11 @@
 import { AddToCart } from 'components/cart/add-to-cart';
 import Price from 'components/price';
 import Prose from 'components/prose';
+import { Location } from 'lib/constants/locations';
 import { Product } from 'lib/shopify/types';
 import { VariantSelector } from './variant-selector';
 
-export function ProductDescription({ product }: { product: Product }) {
+export function ProductDescription({ product, lang }: { product: Product; lang: Location }) {
   return (
     <>
       <div className="flex aspect-square w-full flex-col items-center justify-start">
@@ -29,7 +30,11 @@ export function ProductDescription({ product }: { product: Product }) {
               />
             ) : null}
 
-            <AddToCart variants={product.variants} availableForSale={product.availableForSale} />
+            <AddToCart
+              variants={product.variants}
+              availableForSale={product.availableForSale}
+              lang={lang}
+            />
           </div>
         </div>
       </div>

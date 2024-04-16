@@ -18,7 +18,7 @@ export async function HomeGrid({ lang }: { lang: Location }) {
               <LocationLink
                 key={`${product.handle}${indexProduct}`}
                 href={`/product/${product.handle}`}
-                className="h-fit w-full"
+                className="h-fit w-full cursor-pointer"
                 lang={lang}
               >
                 <GridTileImage

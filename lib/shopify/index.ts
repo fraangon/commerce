@@ -208,10 +208,11 @@ const reshapeProducts = (products: ShopifyProduct[]) => {
   return reshapedProducts;
 };
 
-export async function createCart(): Promise<Cart> {
+export async function createCart(lang: Location): Promise<Cart> {
   const res = await shopifyFetch<ShopifyCreateCartOperation>({
     query: createCartMutation,
-    cache: 'no-store'
+    cache: 'no-store',
+    location: lang
   });
 
   return reshapeCart(res.body.data.cartCreate.cart);
@@ -219,16 +220,21 @@ export async function createCart(): Promise<Cart> {
 
 export async function addToCart(
   cartId: string,
-  lines: { merchandiseId: string; quantity: number }[]
+  lines: { merchandiseId: string; quantity: number }[],
+  lang: Location = locations.ar as Location
 ): Promise<Cart> {
+  console.log('Step 5:addToCart', addToCartMutation, lines, lang, lang);
   const res = await shopifyFetch<ShopifyAddToCartOperation>({
     query: addToCartMutation,
     variables: {
       cartId,
       lines
     },
-    cache: 'no-store'
+    cache: 'no-store',
+    location: lang
   });
+  console.log('Step 6:addToCart', res.body.data.cartLinesAdd.cart);
+
   return reshapeCart(res.body.data.cartLinesAdd.cart);
 }
 
@@ -261,12 +267,13 @@ export async function updateCart(
   return reshapeCart(res.body.data.cartLinesUpdate.cart);
 }
 
-export async function getCart(cartId: string): Promise<Cart | undefined> {
+export async function getCart(cartId: string, lang: Location): Promise<Cart | undefined> {
   const res = await shopifyFetch<ShopifyCartOperation>({
     query: getCartQuery,
     variables: { cartId },
     tags: [TAGS.cart],
-    cache: 'no-store'
+    cache: 'no-store',
+    location: lang
   });
 
   // Old carts becomes `null` when you checkout.
@@ -380,13 +387,14 @@ export async function getPages(): Promise<Page[]> {
   return removeEdgesAndNodes(res.body.data.pages);
 }
 
-export async function getProduct(handle: string): Promise<Product | undefined> {
+export async function getProduct(handle: string, location: Location): Promise<Product | undefined> {
   const res = await shopifyFetch<ShopifyProductOperation>({
     query: getProductQuery,
     tags: [TAGS.products],
     variables: {
       handle
-    }
+    },
+    location
   });
 
   return reshapeProduct(res.body.data.product, false);

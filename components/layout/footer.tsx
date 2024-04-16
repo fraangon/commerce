@@ -37,7 +37,7 @@ export default async function Footer({ lang }: { lang: Location }) {
                     {...(href?.startsWith('http')
                       ? { target: '_blank', rel: 'noopener noreferrer' }
                       : {})}
-                    className="text-brand-900/80 transition-all hover:opacity-60"
+                    className="cursor-pointer text-brand-900/80 transition-all hover:opacity-60"
                   >
                     {label}
                   </LocationLink>

@@ -105,7 +105,7 @@ export default function CartModal({ cart, lang }: { cart: Cart | undefined; lang
                         <li key={i} className="flex w-full flex-col border-b border-brand-900/10">
                           <div className="relative flex w-full flex-row justify-between px-1 py-4">
                             <div className="absolute z-40 -mt-2 ml-[55px]">
-                              <DeleteItemButton item={item} />
+                              <DeleteItemButton item={item} lang={lang} />
                             </div>
                             <div className="z-30 flex flex-row space-x-4">
                               <div className="relative h-16 w-16 cursor-pointer overflow-hidden rounded-md border border-brand-900/5 bg-brand-200">
@@ -125,7 +125,7 @@ export default function CartModal({ cart, lang }: { cart: Cart | undefined; lang
                                 <LocationLink
                                   href={merchandiseUrl}
                                   onClick={closeCart}
-                                  className="text-[16px] font-medium leading-none tracking-tight"
+                                  className="cursor-pointer text-[16px] font-medium leading-none tracking-tight"
                                   lang={lang}
                                 >
                                   {item.merchandise.product.title}

@@ -13,11 +13,11 @@ import { getProductJsonLd } from 'lib/utils/product';
 export const runtime = 'edge';
 
 export async function generateMetadata({
-  params
+  params: { handle, lang }
 }: {
-  params: { handle: string };
+  params: { handle: string; lang: Location };
 }): Promise<Metadata> {
-  const product = await getProduct(params.handle);
+  const product = await getProduct(handle, lang);
 
   if (!product) return notFound();
 
@@ -55,7 +55,7 @@ export default async function ProductPage({
 }: {
   params: { handle: string; lang: Location };
 }) {
-  const product = await getProduct(handle);
+  const product = await getProduct(handle, lang);
 
   if (!product) return notFound();
 
@@ -69,7 +69,7 @@ export default async function ProductPage({
       />
       <div className="flex w-full max-w-default flex-row space-x-4 px-4 pb-20">
         <ProductImages images={product.images} />
-        <ProductDescription product={product} />
+        <ProductDescription product={product} lang={lang} />
       </div>
       <Suspense>
         <Footer lang={lang} />

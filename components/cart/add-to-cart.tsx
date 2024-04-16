@@ -45,12 +45,17 @@ function SubmitButton({
 
 export function AddToCart({
   variants,
-  availableForSale
+  availableForSale,
+  lang
 }: {
   variants: ProductVariant[];
   availableForSale: boolean;
+  lang: string;
 }) {
-  const [message, formAction] = useFormState(addItem, null);
+  const [message, formAction] = useFormState(
+    (prevState: any, selectedVariantId: any) => addItem(prevState, selectedVariantId, lang as any),
+    null
+  );
   const searchParams = useSearchParams();
   const defaultVariantId = variants.length === 1 ? variants[0]?.id : undefined;
   const variant = variants.find((variant: ProductVariant) =>

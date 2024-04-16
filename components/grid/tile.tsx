@@ -20,15 +20,15 @@ export function GridTileImage({
   return (
     <div
       className={clsx(
-        'group flex h-fit w-full flex-1 flex-col items-center justify-center space-y-3',
-        !isAvailable && 'transition-opacity hover:opacity-50'
+        'group flex h-fit w-full flex-1 flex-col items-center justify-center space-y-3 transition-opacity hover:opacity-80'
       )}
     >
       {props.src ? (
         <div
           className={clsx(
             'flex h-full w-full flex-col items-start justify-start rounded bg-brand-200 p-2',
-            isAvailable && 'transition-all hover:-translate-y-1 hover:shadow-sm'
+            isAvailable &&
+              'transition-all ease-in-out group-hover:scale-[1.01] group-hover:shadow-sm'
           )}
         >
           {!isAvailable && (

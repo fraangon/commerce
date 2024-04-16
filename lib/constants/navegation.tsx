@@ -1,21 +1,28 @@
 import Cart from 'components/cart';
 import OpenCart from 'components/cart/open-cart';
+import { LocationSelector } from 'components/location-selector';
 import { Suspense } from 'react';
 import { Location } from './locations';
 
 export const ITEMS = [
   {
+    key: 'location',
+    label: 'Location',
+    // href: '/location'
+    component: ({ lang }: { lang: Location }) => <LocationSelector actualLang={lang as any} />
+  },
+  {
     key: 'products',
     label: 'Products',
     href: '/'
   },
+  // {
+  //   key: 'about',
+  //   label: 'Nosotros',
+  //   href: '/about'
+  // },
   {
-    key: 'about',
-    label: 'Nosotros',
-    href: '/about'
-  },
-  {
-    key: 'contact',
+    key: 'contacto',
     label: 'Contacto',
     href: '/contact'
   },

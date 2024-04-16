@@ -11,7 +11,7 @@ export default async function Navbar({ lang }: { lang: Location }) {
           <div className="flex w-full flex-row items-end justify-start gap-4">
             <LocationLink
               href="/"
-              className="transition-opacity duration-75 hover:opacity-60"
+              className="cursor-pointer transition-opacity duration-75 hover:opacity-80"
               lang={lang}
             >
               <Logo className="h-8 w-fit fill-brand-900" />
@@ -22,7 +22,7 @@ export default async function Navbar({ lang }: { lang: Location }) {
             {ITEMS.map(({ component: Component, href, key, label }) => (
               <li
                 key={key}
-                className="text-[14px] font-medium leading-none tracking-tight text-brand-900 transition-opacity duration-75 hover:opacity-60"
+                className="cursor-pointer text-[14px] font-medium leading-none tracking-tight text-brand-900 transition-colors duration-75 hover:text-brand-900/80"
               >
                 {Component ? (
                   <Component lang={lang} />
