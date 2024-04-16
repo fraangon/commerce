@@ -3,14 +3,13 @@
 
 import { Dialog, Transition } from '@headlessui/react';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
-import Button from 'components/Button';
+import Button from 'components/button';
+import LocationLink from 'components/location-link';
 import Price from 'components/price';
 import { DEFAULT_OPTION } from 'lib/constants';
+import { Location } from 'lib/constants/locations';
 import type { Cart } from 'lib/shopify/types';
 import { createUrl } from 'lib/utils/general';
-
-import LocationLink from 'components/location-link';
-import { Location } from 'lib/constants/locations';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import CloseCart from './close-cart';
 import { DeleteItemButton } from './delete-item-button';

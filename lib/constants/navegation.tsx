@@ -8,19 +8,13 @@ export const ITEMS = [
   {
     key: 'location',
     label: 'Location',
-    // href: '/location'
     component: ({ lang }: { lang: Location }) => <LocationSelector actualLang={lang as any} />
   },
   {
     key: 'products',
-    label: 'Products',
+    label: 'Productos',
     href: '/'
   },
-  // {
-  //   key: 'about',
-  //   label: 'Nosotros',
-  //   href: '/about'
-  // },
   {
     key: 'contacto',
     label: 'Contacto',
